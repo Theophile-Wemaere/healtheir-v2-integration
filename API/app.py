@@ -31,7 +31,7 @@ def check_device(id_device):
     else:
         return True
 
-#@app.before_request
+@app.before_request
 def authenticate():
     api_key = request.headers.get('X-API-Key')
 

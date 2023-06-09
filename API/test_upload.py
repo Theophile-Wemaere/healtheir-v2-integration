@@ -2,12 +2,18 @@ import random
 import time
 import requests
 import json
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 URL = "http://localhost:5000/uploads"
 id_device = "BFD-0LS-X0Y"
 
 headers = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-API-Key': os.getenv('API_KEY')
+
 }
 
 while True:
