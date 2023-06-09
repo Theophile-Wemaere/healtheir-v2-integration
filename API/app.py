@@ -23,7 +23,7 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 def check_device(id_device):
-    cursor.execute("SELECT id_device FROM device WHERE id_device = %s", (id_device,))
+    cursor.execute("SELECT id_device FROM devices WHERE id_device = %s", (id_device,))
     result = cursor.fetchone()
 
     if result is None:
@@ -41,15 +41,14 @@ def authenticate():
 @app.route('/uploads', methods=['POST'])
 def upload_data():
     data = request.json
-
-    metric_type = data['type']
+    metric_type = data['metric_type']
     value = data['value']
-    id_device = data['id_sensor']
+    id_device = data['id_device']
 
     if not check_device(id_device):
         return jsonify({'message': 'Invalid device ID'}), 400
 
-    query = "INSERT INTO sensor_data (id_device, metric_type, value) VALUES (%s, %s, %s)"
+    query = "INSERT INTO metrics (id_device, metric_type, value) VALUES (%s, %s, %s)"
     values = (id_device, metric_type, value)
     cursor.execute(query, values)
     db.commit()
