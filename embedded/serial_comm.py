@@ -16,6 +16,7 @@ def calculatechecksum(frame, checksum):
         return False
 
 def process_data(data):
+    print(data)
     if data.startswith("FE"):
         command = data[2:4]
         sensor = data[4]

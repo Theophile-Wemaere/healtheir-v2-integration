@@ -1,9 +1,10 @@
-import random
-import time
 import requests
 import json
 from dotenv import load_dotenv
 import os
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 load_dotenv()
 
