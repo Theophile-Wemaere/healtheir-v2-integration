@@ -42,8 +42,12 @@ def process_data(data):
 
 
 def main():
-
     if ser.is_open:
+        # Clear input buffer
+        ser.flushInput()
+
+        # Clear output buffer
+        ser.flushOutput()
         while True:
             if ser.in_waiting > 0:
                 data = ser.readline().decode().rstrip()
