@@ -33,9 +33,6 @@ void sendFrame(int type, long value)
   frame[2] = sensors[type];
   frame[3] = size;
 
-
-  Serial.println(hexValue);
-
   for (int i = 0; i < size; i++) {
     char hexChar = hexValue[i];
     if (hexChar >= '0' && hexChar <= '9') {

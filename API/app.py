@@ -41,6 +41,7 @@ def authenticate():
 @app.route('/uploads', methods=['POST'])
 def upload_data():
     data = request.json
+    print(data)
     metric_type = data['metric_type']
     value = data['value']
     id_device = data['id_device']
@@ -50,6 +51,7 @@ def upload_data():
 
     query = "INSERT INTO metrics (id_device, metric_type, value) VALUES (%s, %s, %s)"
     values = (id_device, metric_type, value)
+    print(value)
     cursor.execute(query, values)
     db.commit()
 

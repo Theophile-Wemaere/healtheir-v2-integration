@@ -1,4 +1,5 @@
 #define ECG PD2
+#define DHT11 PD5
 
 unsigned int rate;
 int ecgLimit = 100;
