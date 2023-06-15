@@ -6,11 +6,11 @@ byte send_data = 0x30;
 byte sensors[] = {
   0x01, // ECG
   0x02, // Temperature
-  0x03, // Humidity
+  0x03, // noise
   0x04, // Dust
   0x05, // CO2
-  0x06, // VOC
-  0x07  // noise
+  0x06, // Humidity
+  0x07  // VOC
 };
 
 /*

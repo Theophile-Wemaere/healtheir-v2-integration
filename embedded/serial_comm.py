@@ -32,8 +32,12 @@ def process_data(data):
         for i in payload:
             frame.append(i)
         if calculatechecksum(frame,checksum):
-            print(sensor,int(payload,16))
-            uploader.upload_data(sensor,int(payload,16))
+            payload = int(payload,16)
+            print(frame)
+            if int(sensor) in [2,4,6] : # temp, dust, humidity
+                 payload /= 100
+            print(sensor,payload)
+            uploader.upload_data(sensor,payload)
 
 
 def main():
@@ -42,6 +46,7 @@ def main():
         while True:
             if ser.in_waiting > 0:
                 data = ser.readline().decode().rstrip()
+                #print(data)
                 process_data(data)
 
 if __name__ == "__main__":
