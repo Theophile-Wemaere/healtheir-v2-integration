@@ -5,9 +5,9 @@
 #define R 11
 #define G 10
 #define B 9
-
 #define DUST_D PD3
 #define DUST_A A6
+#define MICRO A3
 
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
@@ -26,6 +26,7 @@ void setup() {
   Serial.begin(9600);
 
   pinMode(ECG,INPUT);
+
   pinMode(R,OUTPUT);
   pinMode(G,OUTPUT);
   pinMode(B,OUTPUT);
@@ -36,15 +37,17 @@ void setup() {
 }
 
 unsigned long millis1, prev_millis = 0;
+unsigned long millis2, prev_millis2 = 0;
 
 void loop() {
   readECG();
-  millis1 = millis();
 
+  millis1 = millis();
   if(millis1 - prev_millis >= 1000)
   {
     prev_millis = millis1;
     readDHT11();
     readDust();
+    readNoise();
   }
 }
