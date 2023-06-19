@@ -2,12 +2,14 @@ const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
 unsigned int sample;
 unsigned long startMillis;  
 unsigned int peakToPeak = 0; // peak-to-peak level
-unsigned int signalMax = 0;
-unsigned int signalMin = 1024;
+unsigned int signalMax;
+unsigned int signalMin;
 
  
 void readNoise()
 {
+  signalMax = 0;                            //minimum value
+  signalMin = 1024;  
   startMillis= millis(); 
   // collect data for 50 mS
   while (millis() - startMillis < sampleWindow)
@@ -27,6 +29,7 @@ void readNoise()
   }
 
   peakToPeak = signalMax - signalMin;   // max - min = peak-peak amplitude
-  int db = map(peakToPeak,20,600,30,100);  //calibrate for deciBels
+  int db = map(peakToPeak,20,800,30,100);  //calibrate for deciBels
+  Serial.println(db);
   sendFrame(2,db);
 }

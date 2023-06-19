@@ -49,14 +49,20 @@ unsigned long millis1, prev_millis = 0;
 unsigned long millis2, prev_millis2 = 0;
 
 void loop() {
- 
   readECG();
+  
   millis1 = millis();
-  if(millis1 - prev_millis >= 1000)
+  if(millis1 - prev_millis >= 600000)
   {
     prev_millis = millis1;
     readDHT11();
     readDust();
+  }
+
+  millis2 = millis();
+  if(millis2 - prev_millis2 >= 10000) 
+  {
+    prev_millis2 = millis2;
     readNoise();
     readCO2();
   }
