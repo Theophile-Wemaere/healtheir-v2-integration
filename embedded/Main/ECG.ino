@@ -1,7 +1,3 @@
-unsigned long millisECG = 0, current,duration;
-int value;
-boolean wasHigh = false;
-
 void readECG()
 {
   value = digitalRead(ECG);
@@ -12,20 +8,33 @@ void readECG()
     duration = current - millisECG;
     millisECG = current;
     rate = 60000/duration;
-    Serial.println(rate);
-    sendFrame(0,rate);
-    if(rate > ecgLimit)
+    if(rate < 300)
     {
-      ecgCounter += 1;
-      if(ecgCounter >= 5)
+      Serial.print("Rate : ");
+      Serial.println(rate);
+      if((rate > prev_rate + 50 || rate < prev_rate - 50) && prev_rate != 0 )
       {
-        alarmGoesOff = true;
+        prev_rate = 0;
+        wasHigh = false;
       }
-    }
-    else
-    {
-      ecgCounter = 0;
-      alarmGoesOff = false;
+      else 
+      {
+        prev_rate = rate;
+        sendFrame(0,rate);
+        if(rate > ecgLimit)
+        {
+          ecgCounter += 1;
+          if(ecgCounter >= 5)
+          {
+            alarmGoesOff = true;
+          }
+        }
+        else
+        {
+          ecgCounter = 0;
+          alarmGoesOff = false;
+        }
+      }
     }
   }
 

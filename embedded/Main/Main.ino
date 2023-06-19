@@ -1,4 +1,5 @@
 #include "DHT.h"
+#include "MICS-VZ-89TE.h"
 
 #define ECG PD2
 #define DHTPIN PD5
@@ -12,12 +13,18 @@
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
+MICS_VZ_89TE CO2SENSOR;
 
 unsigned int rate;
 float humidity;
 float temperature;
 int ecgLimit = 100;
 int ecgCounter = 0;
+
+// ECG variables
+unsigned long millisECG = 0, current,duration;
+int value, prev_rate = 0;
+boolean wasHigh = false;
 
 boolean alarmGoesOff = false;  
 boolean buzz_state = true;
@@ -33,6 +40,8 @@ void setup() {
   pinMode(DUST_D,OUTPUT);
 
   dht.begin();
+  CO2SENSOR.begin();
+
   Serial.println("Done initializing");
 }
 
@@ -40,8 +49,8 @@ unsigned long millis1, prev_millis = 0;
 unsigned long millis2, prev_millis2 = 0;
 
 void loop() {
+ 
   readECG();
-
   millis1 = millis();
   if(millis1 - prev_millis >= 1000)
   {
@@ -49,5 +58,6 @@ void loop() {
     readDHT11();
     readDust();
     readNoise();
+    readCO2();
   }
 }

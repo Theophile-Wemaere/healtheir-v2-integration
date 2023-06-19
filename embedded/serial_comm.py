@@ -3,7 +3,7 @@
 import serial
 import uploader
 
-ser = serial.Serial('/dev/ttyUSB0', 9600)
+ser = serial.Serial('/dev/ttyUSB1', 9600)
 
 def calculatechecksum(frame, checksum):
     new_checksum = 0
@@ -35,7 +35,7 @@ def process_data(data):
         if calculatechecksum(frame,checksum):
             payload = int(payload,16)
             print(frame)
-            if int(sensor) in [2,4,6] : # temp, dust, humidity
+            if int(sensor) in [2,4,5,6,7] : # temp, dust, humidity
                  payload /= 100
             print(sensor,payload)
             uploader.upload_data(sensor,payload)
