@@ -65,3 +65,29 @@ byte calculateChecksum(const byte* data, size_t length)
   }
   return checksum;
 }
+
+void handleResponse(String informations)
+{
+    Serial.print("Value : ");
+    Serial.println(informations);
+    
+    if(informations == "read_ok")
+    {
+      digitalWrite(R,0);
+      digitalWrite(G,100);
+      digitalWrite(B,0);
+    }
+    else if(informations =="read_bad")
+    {
+      digitalWrite(R,100);
+      digitalWrite(G,0);
+      digitalWrite(B,0);
+    }
+    else if(informations.startsWith("command:"))
+    {
+      digitalWrite(R,0);
+      digitalWrite(G,0);
+      digitalWrite(B,100);
+    }
+
+}

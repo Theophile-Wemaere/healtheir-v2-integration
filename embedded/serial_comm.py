@@ -15,7 +15,7 @@ def calculatechecksum(frame, checksum):
         print("Bad checksum : " ,frame)
         return False
 
-def process_data(data):
+def process_data(data,ser):
     print(data)
     if data.startswith("FE"):
         command = data[2:4]
@@ -38,7 +38,10 @@ def process_data(data):
             if int(sensor) in [2,4,5,6,7] : # temp, dust, humidity
                  payload /= 100
             print(sensor,payload)
+            ser.write("read_ok\n".encode())
             uploader.upload_data(sensor,payload)
+        else:
+            ser.write("read_bad\n".encode())
 
 
 def main():
@@ -52,7 +55,7 @@ def main():
             if ser.in_waiting > 0:
                 data = ser.readline().decode().rstrip()
                 #print(data)
-                process_data(data)
+                process_data(data,ser)
 
 if __name__ == "__main__":
     try:

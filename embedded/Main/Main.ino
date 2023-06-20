@@ -41,6 +41,11 @@ void setup() {
 
   dht.begin();
   CO2SENSOR.begin();
+  analogWrite(R,100);
+  analogWrite(G,0);
+  analogWrite(B,100);
+
+  delay(2000);
 
   Serial.println("Done initializing");
 }
@@ -48,10 +53,13 @@ void setup() {
 unsigned long millis1, prev_millis = 0;
 unsigned long millis2, prev_millis2 = 0;
 
+String informations;
+
 void loop() {
+  clearLeds();
   readECG();  
   millis1 = millis();
-  if(millis1 - prev_millis >= 10000)
+  if(millis1 - prev_millis >= 1000)
   {
     prev_millis = millis1;
     readDHT11();
@@ -59,4 +67,30 @@ void loop() {
     readNoise();
     readCO2();
   }
+
+  if(Serial.available())
+  {
+    informations = "";
+    while(Serial.available())
+    {
+      char c = (char)Serial.read();
+      if(c == '\n')
+      {
+        handleResponse(informations);
+        informations = "";
+      } 
+      else 
+      {
+        informations += c;
+      }
+    }
+    
+  }
+}
+
+void clearLeds()
+{
+  digitalWrite(R,LOW);
+  digitalWrite(G,LOW);
+  digitalWrite(B,LOW);
 }
