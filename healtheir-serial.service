@@ -1,0 +1,14 @@
+[Unit]
+Description=healtheir serial manager
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/healtheir-v2-integration/embedded/serial_comm.py
+WorkingDirectory=/home/pi/healtheir-v2-integration/embedded
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
