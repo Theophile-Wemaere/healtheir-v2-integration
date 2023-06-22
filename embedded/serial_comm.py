@@ -4,10 +4,11 @@ import serial
 import uploader
 
 ser = None
+baudrate = 115200
 try:
-    ser = serial.Serial('/dev/ttyUSB0', 9600)
+    ser = serial.Serial('/dev/ttyUSB0', baudrate)
 except serial.serialutil.SerialException:
-    ser = serial.Serial('/dev/ttyUSB1', 9600)
+    ser = serial.Serial('/dev/ttyUSB1', baudrate)
 
 def calculatechecksum(frame, checksum):
     new_checksum = 0
