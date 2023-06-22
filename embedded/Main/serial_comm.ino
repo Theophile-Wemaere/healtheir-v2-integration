@@ -68,9 +68,6 @@ byte calculateChecksum(const byte* data, size_t length)
 
 void handleResponse(String informations)
 {
-    Serial.print("Value : ");
-    Serial.println(informations);
-    
     if(informations == "read_ok")
     {
       digitalWrite(R,0);

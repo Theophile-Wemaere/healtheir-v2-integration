@@ -3,7 +3,11 @@
 import serial
 import uploader
 
-ser = serial.Serial('/dev/ttyUSB1', 9600)
+ser = None
+try:
+    ser = serial.Serial('/dev/ttyUSB0', 9600)
+except serial.serialutil.SerialException:
+    ser = serial.Serial('/dev/ttyUSB1', 9600)
 
 def calculatechecksum(frame, checksum):
     new_checksum = 0

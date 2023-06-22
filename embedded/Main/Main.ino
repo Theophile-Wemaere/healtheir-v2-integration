@@ -56,10 +56,9 @@ unsigned long millis2, prev_millis2 = 0;
 String informations;
 
 void loop() {
-  clearLeds();
   readECG();  
   millis1 = millis();
-  if(millis1 - prev_millis >= 1000)
+  if(millis1 - prev_millis >= 3000)
   {
     prev_millis = millis1;
     readDHT11();
