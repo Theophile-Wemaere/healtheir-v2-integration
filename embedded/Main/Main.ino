@@ -61,7 +61,7 @@ void loop() {
   if(millis1 - prev_millis >= 1000)
   {
     analogWrite(R,100);
-    analogWrite(G,0);
+    analogWrite(G,50);
     analogWrite(B,100);
     prev_millis = millis1;
     readDHT11();

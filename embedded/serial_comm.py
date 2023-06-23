@@ -39,10 +39,8 @@ def process_data(data,ser):
             frame.append(i)
         if calculatechecksum(frame,checksum):
             payload = int(payload,16)
-            print(frame)
             if int(sensor) in [2,4,5,6,7] : # temp, dust, humidity
                  payload /= 100
-            print(sensor,payload)
             ser.write("read_ok\n".encode())
             uploader.upload_data(sensor,payload)
         else:
