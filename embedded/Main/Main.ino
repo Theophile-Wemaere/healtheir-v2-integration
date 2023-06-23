@@ -30,7 +30,7 @@ boolean alarmGoesOff = false;
 boolean buzz_state = true;
 
 void setup() {
-  Serial.begin(250000);
+  Serial.begin(115200);
 
   pinMode(ECG,INPUT);
 
@@ -58,7 +58,7 @@ String informations;
 void loop() {
   readECG();  
   millis1 = millis();
-  if(millis1 - prev_millis >= 500)
+  if(millis1 - prev_millis >= 3000)
   {
     analogWrite(R,100);
     analogWrite(G,50);

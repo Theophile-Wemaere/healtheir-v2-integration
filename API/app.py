@@ -31,6 +31,13 @@ def check_device(id_device):
     else:
         return True
 
+def check_threshold(id_device):
+    cursor.execute("SELECT value FROM alert_threshold WHERE id_device = %s AND metric_type = 1", (id_device,))
+    result = cursor.fetchone()
+    return result
+
+
+
 @app.before_request
 def authenticate():
     api_key = request.headers.get('X-API-Key')
@@ -45,6 +52,11 @@ def upload_data():
     metric_type = data['metric_type']
     value = data['value']
     id_device = data['id_device']
+
+    message = "success"
+    if metric_type == 1:
+        limit = check_threshold(id_device)
+        print(limit)
 
     if not check_device(id_device):
         return jsonify({'message': 'Invalid device ID'}), 400

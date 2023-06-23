@@ -4,7 +4,7 @@ import serial
 import uploader
 
 ser = None
-baudrate = 250000
+baudrate = 115200
 try:
     ser = serial.Serial('/dev/ttyUSB0', baudrate)
 except serial.serialutil.SerialException:
