@@ -24,6 +24,8 @@ def upload_data(sensor,value):
     }
     try:
         r = requests.post(URL,data=json.dumps(body),headers=headers, verify=False)
+        datas = json.loads(r.text)
+        return datas["message"]
     except requests.exceptions.ConnectionError as e:
         print(e)
     

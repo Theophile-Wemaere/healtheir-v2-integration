@@ -85,6 +85,15 @@ void handleResponse(String informations)
       digitalWrite(R,0);
       digitalWrite(G,0);
       digitalWrite(B,100);
+      int startIndex = informations.indexOf("command:") + 8;
+      String extractedData = informations.substring(startIndex);
+      if(extractedData == "alert_threshold")
+      {
+        isAlert = true;
+      }
+      else if(extractedData == "ecg_ok")
+      {
+        isAlert = false;
+      }
     }
-
 }

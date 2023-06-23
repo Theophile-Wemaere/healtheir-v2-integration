@@ -21,6 +21,8 @@ float temperature;
 int ecgLimit = 100;
 int ecgCounter = 0;
 
+boolean isAlert = false;
+
 // ECG variables
 unsigned long millisECG = 0, current,duration;
 int value, prev_rate = 0;
@@ -57,12 +59,22 @@ String informations;
 
 void loop() {
   readECG();  
+
+  if(millis() - prev_millis2 >= 300)
+  {
+    prev_millis2 = millis();
+    testAlert();
+  }
+
   millis1 = millis();
   if(millis1 - prev_millis >= 3000)
   {
-    analogWrite(R,100);
-    analogWrite(G,50);
-    analogWrite(B,100);
+    if(!isAlert)
+    {
+      analogWrite(R,100);
+      analogWrite(G,50);
+      analogWrite(B,100);
+    }
     prev_millis = millis1;
     readDHT11();
     readDust();
@@ -87,6 +99,16 @@ void loop() {
       }
     }
     
+  }
+}
+
+void testAlert()
+{
+  if(isAlert)
+  {
+    digitalWrite(R,HIGH);
+    digitalWrite(G,LOW);
+    digitalWrite(B,LOW);
   }
 }
 

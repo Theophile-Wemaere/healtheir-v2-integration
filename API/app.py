@@ -60,6 +60,8 @@ def upload_data():
         min_limit = int(limit[0].split(':')[0])
         if value > max_limit or value < min_limit:
             message="alert_threshold"
+        else:
+            message="ecg_ok"
 
     if not check_device(id_device):
         return jsonify({'message': 'Invalid device ID'}), 400
