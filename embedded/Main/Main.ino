@@ -21,6 +21,7 @@ float temperature;
 int ecgLimit = 100;
 int ecgCounter = 0;
 
+int alertCounter = 0;
 boolean isAlert = false;
 
 // ECG variables
@@ -66,6 +67,22 @@ void loop() {
     testAlert();
   }
 
+  if(Serial.available())
+  {
+    while(Serial.available())
+    {
+      char c = (char)Serial.read();
+      if(c == '\n')
+      {
+        handleResponse(informations);
+        informations = "";
+      }
+      else
+        informations += c;
+    }
+    
+  }
+
   millis1 = millis();
   if(millis1 - prev_millis >= 3000)
   {
@@ -81,32 +98,13 @@ void loop() {
     readNoise();
     readCO2();
   }
-
-  if(Serial.available())
-  {
-    informations = "";
-    while(Serial.available())
-    {
-      char c = (char)Serial.read();
-      if(c == '\n')
-      {
-        handleResponse(informations);
-        informations = "";
-      } 
-      else 
-      {
-        informations += c;
-      }
-    }
-    
-  }
 }
 
 void testAlert()
 {
   if(isAlert)
   {
-    digitalWrite(R,HIGH);
+    digitalWrite(R,!digitalRead(R));
     digitalWrite(G,LOW);
     digitalWrite(B,LOW);
   }

@@ -70,30 +70,42 @@ void handleResponse(String informations)
 {
     if(informations == "read_ok")
     {
-      digitalWrite(R,0);
-      digitalWrite(G,100);
-      digitalWrite(B,0);
+      if(!isAlert)
+      {
+        digitalWrite(R,0);
+        digitalWrite(G,100);
+        digitalWrite(B,0);
+      }
     }
     else if(informations =="read_bad")
     {
-      digitalWrite(R,100);
-      digitalWrite(G,0);
-      digitalWrite(B,0);
+      if(!isAlert)
+      {
+        digitalWrite(R,100);
+        digitalWrite(G,0);
+        digitalWrite(B,0);
+      }
     }
     else if(informations.startsWith("command:"))
     {
-      digitalWrite(R,0);
-      digitalWrite(G,0);
-      digitalWrite(B,100);
-      int startIndex = informations.indexOf("command:") + 8;
-      String extractedData = informations.substring(startIndex);
-      if(extractedData == "alert_threshold")
+      if(!isAlert)
       {
-        isAlert = true;
+        digitalWrite(R,0);
+        digitalWrite(G,0);
+        digitalWrite(B,100);
       }
-      else if(extractedData == "ecg_ok")
+      int startIndex = informations.indexOf("command:") + 8;
+      String command = informations.substring(startIndex);
+      if(command == "alert_threshold")
+      {
+        alertCounter++;
+        if(alertCounter >= 5)
+          isAlert = true;
+      }
+      else if(command == "ecg_ok")
       {
         isAlert = false;
+        alertCounter = 0;
       }
     }
 }

@@ -43,11 +43,12 @@ def process_data(data,ser):
                  payload /= 100
             print("Value : " , payload)
             r = uploader.upload_data(sensor,payload)
-            print(r)
             if r == "alert_threshold":
                 ser.write("command:alert_threshold\n".encode())
             elif r == "ecg_ok":
                 ser.write("command:ecg_ok\n".encode())
+            else:
+                ser.write("read_ok\n".encode())
         else:
             ser.write("read_bad\n".encode())
 
