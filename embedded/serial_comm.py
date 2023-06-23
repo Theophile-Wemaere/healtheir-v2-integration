@@ -42,6 +42,7 @@ def process_data(data,ser):
             if int(sensor) in [2,4,5,6,7] : # temp, dust, humidity
                  payload /= 100
             ser.write("read_ok\n".encode())
+            print("Value : " , payload)
             uploader.upload_data(sensor,payload)
         else:
             ser.write("read_bad\n".encode())

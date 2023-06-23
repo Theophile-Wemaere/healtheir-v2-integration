@@ -22,5 +22,7 @@ void readDust()
   // linear eqaution taken from http://www.howmuchsnow.com/arduino/airquality/
   // Chris Nafis (c) 2012
   dustDensity = 170 * calcVoltage - 0.1;
+  Serial.print("Dust density : ");
+  Serial.println(dustDensity);
   sendFrame(3,int(dustDensity*100));
 }

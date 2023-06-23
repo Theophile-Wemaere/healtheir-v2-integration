@@ -13,6 +13,10 @@ void readCO2() { // run over and over
   if((co2 <= prev_co2 + 100 || voc <= prev_voc + 100) || (prev_co2 == 0 && prev_voc ==0))
   {
     prev_voc = voc; prev_co2 = co2;
+    Serial.print("CO2 : ");
+    Serial.print(co2);
+    Serial.print(" | VOC : ");
+    Serial.println(voc);
     sendFrame(4,co2*100);
     sendFrame(6,voc*100);
   }

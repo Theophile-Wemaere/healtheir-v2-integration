@@ -30,6 +30,7 @@ void readNoise()
 
   peakToPeak = signalMax - signalMin;   // max - min = peak-peak amplitude
   int db = map(peakToPeak,20,800,30,100);  //calibrate for deciBels
-  //Serial.println(db);
+  Serial.print("DB : ");
+  Serial.println(db);
   sendFrame(2,db);
 }
