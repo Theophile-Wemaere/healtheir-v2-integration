@@ -54,9 +54,12 @@ def upload_data():
     id_device = data['id_device']
 
     message = "success"
-    if metric_type == 1:
+    if metric_type == '1':
         limit = check_threshold(id_device)
-        print(limit)
+        max_limit = int(limit[0].split(':')[1])
+        min_limit = int(limit[0].split(':')[0])
+        if value > max_limit or value < min_limit:
+            message="alert_threshold"
 
     if not check_device(id_device):
         return jsonify({'message': 'Invalid device ID'}), 400
@@ -67,7 +70,7 @@ def upload_data():
     cursor.execute(query, values)
     db.commit()
 
-    return jsonify({'message': 'success'}), 200
+    return jsonify({'message': message}), 200
 
 if __name__ == '__main__':
     app.run()
